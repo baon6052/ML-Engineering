@@ -1,22 +1,15 @@
+#!/bin/bash
+
 FILE=$1
 
-if [[ $FILE != "cityscapes" && $FILE != "night2day" && $FILE != "edges2handbags" && $FILE != "edges2shoes" && $FILE != "facades" && $FILE != "maps" ]]; then
-  echo "Available datasets are cityscapes, night2day, edges2handbags, edges2shoes, facades, maps"
-  exit 1
-fi
-
-if [[ $FILE == "cityscapes" ]]; then
-    echo "Due to license issue, we cannot provide the Cityscapes dataset from our repository. Please download the Cityscapes dataset from https://cityscapes-dataset.com, and use the script ./datasets/prepare_cityscapes_dataset.py."
-    echo "You need to download gtFine_trainvaltest.zip and leftImg8bit_trainvaltest.zip. For further instruction, please read ./datasets/prepare_cityscapes_dataset.py"
+if [[ ${FILE} != "apple2orange" && ${FILE} != "summer2winter_yosemite" &&  ${FILE} != "horse2zebra" && ${FILE} != "monet2photo" && ${FILE} != "cezanne2photo" && ${FILE} != "ukiyoe2photo" && ${FILE} != "vangogh2photo" && ${FILE} != "maps" && ${FILE} != "facades" && ${FILE} != "iphone2dslr_flower" ]]; then
+    echo "Available datasets are: apple2orange, summer2winter_yosemite, horse2zebra, monet2photo, cezanne2photo, ukiyoe2photo, vangogh2photo, maps, cityscapes, facades, iphone2dslr_flower"
     exit 1
 fi
 
-echo "Specified [$FILE]"
-
-URL=http://efrosgans.eecs.berkeley.edu/pix2pix/datasets/$FILE.tar.gz
-TAR_FILE=./$FILE.tar.gz
-TARGET_DIR=./datasets/$FILE/
-wget -N $URL -O $TAR_FILE
-mkdir -p $TARGET_DIR
-tar -zxvf $TAR_FILE -C ./datasets/
-rm $TAR_FILE
+URL=https://people.eecs.berkeley.edu/~taesung_park/CycleGAN/datasets/${FILE}.zip
+ZIP_FILE=${FILE}.zip
+TARGET_DIR=${FILE}
+wget ${URL}
+unzip ${ZIP_FILE}
+rm ${ZIP_FILE}
