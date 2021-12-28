@@ -1,7 +1,6 @@
 import numpy as np
 import timm
 import torch
-
 from vision_transformer import VisionTransformer
 
 

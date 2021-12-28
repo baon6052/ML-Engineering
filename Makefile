@@ -16,16 +16,20 @@ dev: build
 shell: build
 	docker-compose run dev bash
 
-.PHONY: black
-black:
-	docker-compose run dev python -m black -l 80 .
+.PHONY: mypy
+mypy:
+	docker-compose run dev python -m mypy .
 
 .PHONY: isort
 isort:
 	docker-compose run dev python -m isort --profile black --overwrite-in-place .
 
+.PHONY: black
+black:
+	docker-compose run dev python -m black -l 80 .
+
 .PHONY: lint
-lint: isort black
+lint: mypy isort black
 
 .PHONY: help
 help:
@@ -35,6 +39,7 @@ help:
 	@echo build-pull: Build and pull images without cache
 	@echo dev: Build project
 	@echo shell: Build project and provide bash shell
-	@echo black: Run black
+	@echo mypy: Run mypy
 	@echo isort: Run isort
-	@echo lint: run isort, black
+	@echo black: Run black
+	@echo lint: run mypy, isort, black

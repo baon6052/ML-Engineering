@@ -2,11 +2,10 @@ from typing import Callable, Tuple
 
 import numpy as np
 import torch
-
+from animation import create_animation
 from torch.optim import SGD, Adam
 from tqdm import tqdm
 
-from animation import create_animation
 
 def rosenbrock(xy: Tuple) -> float:
     """
