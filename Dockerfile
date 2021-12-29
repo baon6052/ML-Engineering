@@ -1,4 +1,5 @@
 FROM python:3.9.9-bullseye
+FROM jupyter/minimal-notebook
 
 COPY requirements.txt requirements-dev.txt /tmp/
 RUN python -m pip install \

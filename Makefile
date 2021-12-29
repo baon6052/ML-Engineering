@@ -16,6 +16,10 @@ dev: build
 shell: build
 	docker-compose run dev bash
 
+.PHONY: jupyter
+jupyter: build
+	docker-compose run -p 8888:8888 -v '$(PWD)':/home/jovyan/work dev
+
 .PHONY: mypy
 mypy:
 	docker-compose run dev python -m mypy .
