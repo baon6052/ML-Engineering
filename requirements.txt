@@ -3,6 +3,7 @@ matplotlib
 numpy
 pandas
 Pillow
+setuptools==59.5.0
 tensorboard
 timm
 torch
