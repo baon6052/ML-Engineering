@@ -1,4 +1,6 @@
+click
 ipywidgets
+livelossplot
 matplotlib
 numpy
 pandas
@@ -8,5 +10,6 @@ tensorboard
 timm
 torch
 torchaudio
+torchtyping
 torchvision
 tqdm

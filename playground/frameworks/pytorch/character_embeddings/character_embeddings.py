@@ -4,11 +4,12 @@ import numpy as np
 import pandas as pd
 import torch
 import torch.nn.functional as F
-from dataset import CharacterDataset
 from network import Network
 from torch.nn import Module
 from torch.utils.data import DataLoader, SubsetRandomSampler
 from tqdm import tqdm
+
+from dataset import CharacterDataset
 
 
 def compute_loss(loss: Callable, net, dataloader):

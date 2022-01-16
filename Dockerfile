@@ -8,4 +8,6 @@ RUN python -m pip install \
     && jupyter nbextension enable --py widgetsnbextension --sys-prefix \
     && jupyter labextension install @jupyter-widgets/jupyterlab-manager
 
+ENV PYTHONPATH "${PYTHONPATH}:."
+
 WORKDIR /workarea
