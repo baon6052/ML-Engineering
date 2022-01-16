@@ -21,7 +21,7 @@ from models.generative_adversarial_networks.wasserstein_gan.model.initializer im
     initialize_weights,
 )
 from models.generative_adversarial_networks.wasserstein_gan.visualize import (
-    visualize_snapshots_grid,
+    visualize_snapshots_grid_progress_2d,
 )
 from utilities.utils import EasyDict
 
@@ -43,9 +43,6 @@ def train(
     liveplot = PlotLosses()
 
     for epoch in range(c.num_epochs):
-
-        gen.train()
-        disc.train()
 
         for batch_idx, (data, _) in enumerate(train_loader):
             data = data.to(c.device)
@@ -81,17 +78,7 @@ def train(
             gen_loss_array.append(loss_gen.item())
             disc_loss_array.append(loss_disc.item())
 
-        with torch.no_grad():
-            fake = gen(fixed_noise)
-
-            img_grid_real = torchvision.utils.make_grid(
-                data[:32], normalize=True
-            )
-            img_grid_fake = torchvision.utils.make_grid(
-                fake[:32], normalize=True
-            )
-
-            snapshots.append((epoch, img_grid_real, img_grid_fake))
+            snapshots.append((epoch, data, fake))
 
         liveplot.update(
             {
@@ -196,7 +183,7 @@ def main(**kwargs):
     # Train model and log training snapshots
     snapshots = train(gen, disc, optimizer_gen, optimizer_disc, c)
 
-    visualize_snapshots_grid(snapshots)
+    visualize_snapshots_grid_progress_2d(snapshots)
 
 
 if __name__ == "__main__":
