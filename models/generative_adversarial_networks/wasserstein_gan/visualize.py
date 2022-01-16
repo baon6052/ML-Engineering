@@ -14,14 +14,14 @@ def visualize_snapshots_grid(snapshots: List[Tuple[int, Tensor, Tensor]]):
             plt.yticks([])
             plt.axis("off")
             plt.grid(False)
-            plt.imshow(snapshot_A.cpu())
+            plt.imshow(snapshot_A.swapaxes(0, 1).swapaxes(1, 2).cpu())
             plt.subplot(1, 2, 2)
             plt.xticks([])
             plt.yticks([])
             plt.axis("off")
             plt.grid(False)
             plt.imshow(
-                snapshot_B[0].cpu()
+                snapshot_B.swapaxes(0, 1).swapaxes(1, 2).cpu()
             )
         plt.show()
 
