@@ -78,7 +78,7 @@ def train(
             gen_loss_array.append(loss_gen.item())
             disc_loss_array.append(loss_disc.item())
 
-            snapshots.append((epoch, data, fake))
+            snapshots.append((epoch, fake))
 
         liveplot.update(
             {

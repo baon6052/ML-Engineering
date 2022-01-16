@@ -5,7 +5,7 @@ from math import sqrt
 from torch import Tensor
 
 
-def visualize_snapshots_grid_progress_2d(snapshots: List[Tuple[int, Tensor, Tensor]]):
+def visualize_snapshots_grid_progress_2d(snapshots: List[Tuple[int, Tensor]]):
     batch_size = snapshots[0][1].shape[0]
     subplot_size = sqrt(batch_size)
     for snapshot_epoch, snapshot in snapshots:
