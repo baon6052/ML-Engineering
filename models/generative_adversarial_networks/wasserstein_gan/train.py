@@ -19,6 +19,9 @@ from models.generative_adversarial_networks.wasserstein_gan.model.generator impo
 from models.generative_adversarial_networks.wasserstein_gan.model.initializer import (
     initialize_weights,
 )
+from models.generative_adversarial_networks.wasserstein_gan.visualize import (
+    visualize_snapshots,
+)
 from utilities.utility import EasyDict
 
 
@@ -99,6 +102,8 @@ def train(
 
 
 @click.command()
+
+# Training config
 @click.option(
     "--num_epochs", help="The number of epochs to train model", default=5
 )
@@ -107,6 +112,8 @@ def train(
     help="The number of colour channels in image training set",
     default=1,
 )
+
+# Generator config
 @click.option("--glr", help="Learning Rate of the Generator", default=5e-5)
 @click.option("--g_batch_size", help="Batch size of Generator", default=64)
 @click.option(
@@ -117,6 +124,8 @@ def train(
     help="The Generator's number of initial features to transpose to",
     default=64,
 )
+
+# Discriminator config
 @click.option("--dlr", help="Learning Rate of the Discriminator", default=5e-5)
 @click.option("--d_batch_size", help="Batch size of Discriminator", default=64)
 @click.option(
@@ -181,9 +190,10 @@ def main(**kwargs):
     optimizer_gen = optim.RMSprop(gen.parameters(), lr=c.g_kwargs.lr)
     optimizer_disc = optim.RMSprop(disc.parameters(), lr=c.d_kwargs.lr)
 
+    # Train model and log training snapshots
     snapshots = train(gen, disc, optimizer_gen, optimizer_disc, c)
 
-    return snapshots
+    visualize_snapshots(snapshots)
 
 
 if __name__ == "__main__":
