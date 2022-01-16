@@ -21,9 +21,9 @@ from models.generative_adversarial_networks.wasserstein_gan.model.initializer im
     initialize_weights,
 )
 from models.generative_adversarial_networks.wasserstein_gan.visualize import (
-    visualize_snapshots,
+    visualize_snapshots_grid,
 )
-from utilities.utility import EasyDict
+from utilities.utils import EasyDict
 
 
 def train(
@@ -106,7 +106,7 @@ def train(
 
 @click.command()
 
-# Training config
+# Training and data config
 @click.option(
     "--num_epochs", help="The number of epochs to train model", default=5
 )
@@ -196,7 +196,7 @@ def main(**kwargs):
     # Train model and log training snapshots
     snapshots = train(gen, disc, optimizer_gen, optimizer_disc, c)
 
-    visualize_snapshots(snapshots)
+    visualize_snapshots_grid(snapshots)
 
 
 if __name__ == "__main__":
