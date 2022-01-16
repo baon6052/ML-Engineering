@@ -1,4 +1,4 @@
-from typing import Type
+from typing import List, Tuple, Type
 
 import click
 import numpy as np
@@ -6,6 +6,7 @@ import torch
 import torch.optim as optim
 import torchvision
 from livelossplot import PlotLosses
+from torch import Tensor
 
 from models.generative_adversarial_networks.wasserstein_gan.data.dataset import (
     train_loader,
@@ -31,7 +32,7 @@ def train(
     optimizer_gen: Type[optim.RMSprop],
     optimizer_disc: Type[optim.RMSprop],
     c: Type[EasyDict],
-):
+) -> List[Tuple[int, Tensor, Tensor]]:
 
     # Logging and visualizing results
     fixed_noise = torch.randn(32, c.g_kwargs.z_dim, 1, 1).to(c.device)
@@ -99,6 +100,8 @@ def train(
             }
         )
         liveplot.draw()
+
+    return snapshots
 
 
 @click.command()
