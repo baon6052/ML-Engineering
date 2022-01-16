@@ -1,10 +1,10 @@
-from typing import Tuple
+from typing import List, Tuple
 
 import matplotlib.pyplot as plt
 from torch import Tensor
 
 
-def visualize_snapshots(snapshots: list[Tuple[int, Tensor, Tensor]]):
+def visualize_snapshots(snapshots: List[Tuple[int, Tensor, Tensor]]):
     for snapshot_epoch, snapshot_A, snapshot_B in snapshots:
         print(f"\n\n Results At Epoch {snapshot_epoch} \n\n")
         plt.figure(figsize=(6, 6))
