@@ -1,7 +1,7 @@
+from math import sqrt
 from typing import List, Tuple
 
 import matplotlib.pyplot as plt
-from math import sqrt
 from torch import Tensor
 
 
@@ -15,7 +15,7 @@ def visualize_snapshots_grid_progress_2d(snapshots: List[Tuple[int, Tensor]]):
             plt.subplot(subplot_size, subplot_size, i + 1)
             plt.xticks([])
             plt.yticks([])
-            plt.axis('off')
+            plt.axis("off")
             plt.grid(False)
             plt.imshow(snapshot[i][0][:, :].detach().cpu(), cmap=plt.cm.gray_r)
         plt.show()
@@ -37,7 +37,5 @@ def visualize_snapshots(snapshots: List[Tuple[int, Tensor, Tensor]]):
             plt.yticks([])
             plt.axis("off")
             plt.grid(False)
-            plt.imshow(
-                snapshot_B[0].swapaxes(0, 1).swapaxes(1, 2).cpu()
-            )
+            plt.imshow(snapshot_B[0].swapaxes(0, 1).swapaxes(1, 2).cpu())
         plt.show()

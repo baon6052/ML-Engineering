@@ -4,7 +4,6 @@ import click
 import numpy as np
 import torch
 import torch.optim as optim
-import torchvision
 from livelossplot import PlotLosses
 from torch import Tensor
 
@@ -20,7 +19,7 @@ from models.generative_adversarial_networks.wasserstein_gan.model.generator impo
 from models.generative_adversarial_networks.wasserstein_gan.model.initializer import (
     initialize_weights,
 )
-from models.generative_adversarial_networks.wasserstein_gan.visualize import (
+from utilities.visualize import (
     visualize_snapshots_grid_progress_2d,
 )
 from utilities.utils import EasyDict
@@ -34,7 +33,7 @@ def train(
     c: Type[EasyDict],
 ) -> List[Tuple[int, Tensor, Tensor]]:
 
-    # Logging and visualizing results
+    # For logging and visualizing results
     fixed_noise = torch.randn(32, c.g_kwargs.z_dim, 1, 1).to(c.device)
     snapshots = []
     gen_loss_array = []
@@ -78,7 +77,7 @@ def train(
             gen_loss_array.append(loss_gen.item())
             disc_loss_array.append(loss_disc.item())
 
-            snapshots.append((epoch, fake))
+        snapshots.append((epoch, fake))
 
         liveplot.update(
             {
