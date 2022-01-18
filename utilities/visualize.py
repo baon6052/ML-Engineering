@@ -8,11 +8,15 @@ from torch import Tensor
 def visualize_snapshots_grid_progress_2d(snapshots: List[Tuple[int, Tensor]]):
     batch_size = snapshots[0][1].shape[0]
     subplot_size = sqrt(batch_size)
+
+    print(batch_size)
+    print(subplot_size)
+
     for snapshot_epoch, snapshot in snapshots:
         print(f"\n\n Results At Epoch {snapshot_epoch} \n\n")
         plt.figure(figsize=(6, 6))
-        for i in range(batch_size):
-            plt.subplot(subplot_size, subplot_size, i + 1)
+        for i in range(64):
+            plt.subplot(8, 8, i + 1)
             plt.xticks([])
             plt.yticks([])
             plt.axis("off")
