@@ -199,7 +199,7 @@ def main(**kwargs):
 
     # Get dataset loaders
     train_loader, test_loader = get_loaders(
-        c.g_kwargs.g_batch_size, c.img_size, c.channels_img
+        c.g_kwargs.g_batch_size, c.image_size, c.channels_img
     )
 
     # Initialize optimizers
