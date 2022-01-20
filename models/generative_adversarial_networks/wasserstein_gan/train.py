@@ -6,9 +6,10 @@ import torch
 import torch.optim as optim
 from livelossplot import PlotLosses
 from torch import Tensor
+from torch.utils.data import DataLoader
 
 from models.generative_adversarial_networks.wasserstein_gan.data.dataset import (
-    train_loader,
+    get_loaders,
 )
 from models.generative_adversarial_networks.wasserstein_gan.model.discriminator import (
     Discriminator,
@@ -19,22 +20,20 @@ from models.generative_adversarial_networks.wasserstein_gan.model.generator impo
 from models.generative_adversarial_networks.wasserstein_gan.model.initializer import (
     initialize_weights,
 )
-from utilities.visualize import (
-    visualize_snapshots_grid_progress_2d,
-)
 from utilities.utils import EasyDict
+from utilities.visualize import visualize_snapshots_grid_progress_2d
 
 
 def train(
     gen: Type[Generator],
     disc: Type[Discriminator],
+    train_loader: DataLoader,
     optimizer_gen: Type[optim.RMSprop],
     optimizer_disc: Type[optim.RMSprop],
     c: Type[EasyDict],
 ) -> List[Tuple[int, Tensor, Tensor]]:
 
     # For logging and visualizing results
-    fixed_noise = torch.randn(32, c.g_kwargs.z_dim, 1, 1).to(c.device)
     snapshots = []
     gen_loss_array = []
     disc_loss_array = []
@@ -77,7 +76,9 @@ def train(
             gen_loss_array.append(loss_gen.item())
             disc_loss_array.append(loss_disc.item())
 
-        noise = torch.randn(c.g_kwargs.g_batch_size, c.g_kwargs.z_dim, 1, 1).to(c.device)
+        noise = torch.randn(c.g_kwargs.g_batch_size, c.g_kwargs.z_dim, 1, 1).to(
+            c.device
+        )
         fake = gen(noise)
         snapshots.append((epoch, fake))
 
@@ -94,14 +95,26 @@ def train(
 
 @click.command()
 
-# Training and data config
+# Training config
 @click.option(
     "--num_epochs", help="The number of epochs to train model", default=5
 )
 @click.option(
+    "--device",
+    help="The device which to train the model, either on cpu or cuda",
+    default="cuda",
+)
+
+# Dataset and Transform config
+@click.option(
     "--channels_img",
     help="The number of colour channels in image training set",
     default=1,
+)
+@click.option(
+    "--image_size",
+    help="The size to transform each image in the dataset",
+    default=64,
 )
 
 # Generator config
@@ -149,10 +162,17 @@ def main(**kwargs):
     c.g_kwargs = EasyDict(class_name="Generator", features_gen=64)
     c.d_kwargs = EasyDict(class_name="Discriminator", features_gen=64)
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    c.device = device
+    if opts.device == "cuda":
+        opts.device = torch.device(
+            "cuda" if torch.cuda.is_available() else "cpu"
+        )
+
+    c.device = opts.device
 
     c.num_epochs = opts.num_epochs
+
+    # Data and Transform config
+    c.image_size = opts.image_size
     c.channels_img = opts.channels_img
 
     # Generator config
@@ -171,18 +191,23 @@ def main(**kwargs):
 
     # Initialize models
     gen = Generator(c.g_kwargs.z_dim, c.channels_img, c.g_kwargs.g_features).to(
-        device
+        c.device
     )
-    disc = Discriminator(c.channels_img, c.d_kwargs.d_features).to(device)
+    disc = Discriminator(c.channels_img, c.d_kwargs.d_features).to(c.device)
     initialize_weights(gen)
     initialize_weights(disc)
+
+    # Get dataset loaders
+    train_loader, test_loader = get_loaders(
+        c.g_kwargs.g_batch_size, c.img_size, c.channels_img
+    )
 
     # Initialize optimizers
     optimizer_gen = optim.RMSprop(gen.parameters(), lr=c.g_kwargs.lr)
     optimizer_disc = optim.RMSprop(disc.parameters(), lr=c.d_kwargs.lr)
 
     # Train model and log training snapshots
-    snapshots = train(gen, disc, optimizer_gen, optimizer_disc, c)
+    snapshots = train(gen, disc, train_loader, optimizer_gen, optimizer_disc, c)
 
     visualize_snapshots_grid_progress_2d(snapshots)
 
