@@ -46,7 +46,7 @@ def train(
         for batch_idx, (data, _) in enumerate(train_loader):
             data = data.to(c.device)
             cur_batch_size = data.shape[0]
-            print(cur_batch_size)
+            
             # Train Discriminator
             for _ in range(c.d_kwargs.d_iterations):
                 noise = torch.randn(cur_batch_size, c.g_kwargs.z_dim, 1, 1).to(
@@ -77,7 +77,9 @@ def train(
             gen_loss_array.append(loss_gen.item())
             disc_loss_array.append(loss_disc.item())
 
-        fake = gen(noise)
+        while fake.shape[0] != 64:
+            fake = gen(noise)
+
         snapshots.append((epoch, fake))
 
         liveplot.update(
