@@ -1,4 +1,6 @@
+click
 ipywidgets
+livelossplot
 matplotlib
 numpy
 pandas
