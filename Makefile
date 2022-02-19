@@ -33,7 +33,7 @@ black:
 	docker-compose run dev python -m black -l 80 .
 
 .PHONY: lint
-lint: mypy isort black
+lint: isort black
 
 .PHONY: help
 help:

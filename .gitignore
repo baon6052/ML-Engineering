@@ -7,4 +7,6 @@ __pycache__
 *.pth
 *.log
 
+dataset/
+logs/
 venv
