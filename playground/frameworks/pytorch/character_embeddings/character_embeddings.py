@@ -37,7 +37,7 @@ def generate_text(
         n_chars: Number of characters to generate.
         net: Charater-level model.
         dataset: Instance of the `CharacterDataset`.
-        initial_text: The starting test to be used as the initial condition for the model.
+        initial_text: The starting test to be used as the initial condition for the model.  # noqa: E501
         random_state: If not None, then the result is reproducible.
 
     Returns:
@@ -113,7 +113,6 @@ if __name__ == "__main__":
         if torch.cuda.is_available()
         else torch.device("cpu")
     )
-    print(DEVICE)
 
     net = Network(
         vocab_size,

@@ -49,7 +49,8 @@ class SelfAttention(nn.Module):
         )
         # attention shape: (N, heads, query_len, key_len)
         # values shape: (N, value_len, heads, heads_dim)
-        # after einsum (N, query_len, heads, head_dim) then flatten last two dimension
+        # after einsum (N, query_len, heads, head_dim)
+        # then flatten last two dimension
 
         out = self.fc_out(out)
         return out

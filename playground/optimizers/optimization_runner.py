@@ -16,7 +16,7 @@ def rosenbrock(xy: Tuple) -> float:
         The Rosenbrock function value evaluated at the point xy.
     """
     x, y = xy
-    return (1 - x) ** 2 + 100 * (y - x ** 2) ** 2
+    return (1 - x) ** 2 + 100 * (y - x**2) ** 2
 
 
 def run_optimization(
@@ -29,7 +29,7 @@ def run_optimization(
     """Run optimization finding the minimum of a given function.
 
     Args:
-        xy_init: Starting point - two floats representing the x and y coordinates.
+        xy_init: Starting point - two floats representing the x and y coordinates.  # noqa: E501
         optimizer_class: Optimizer class which we want to run.
         n_iter: Number of iterations to run the optimization for.
         func: Function to find the minimum against.

@@ -10,7 +10,7 @@ class Network(Module):
         embedding_dim: Dimension of the character embedding vectors.
         dense_dim: Number of neurons in the linear layer that follows the LSTM.
         hidden_dim: Size of the LSTM hidden state.
-        max_norm: If any of the embedding vectors has a higher L2 norm that max_norm, it is rescaled.
+        max_norm: If any of the embedding vectors has a higher L2 norm that max_norm, it is rescaled.  # noqa: E501
         n_layers: Number of layers of the LSTM.
     """
 
@@ -42,7 +42,7 @@ class Network(Module):
     ):
         """
         Args:
-            x: Input tensor of shape `(n_samples, window_size)` of dtype `torch.int64`
+            x: Input tensor of shape `(n_samples, window_size)` of dtype `torch.int64`  # noqa: E501
             h: Hidden states of the LSTM
             c: Hidden states of the LSTM
 
