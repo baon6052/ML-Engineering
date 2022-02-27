@@ -12,7 +12,7 @@ class PatchEmbed(nn.Module):
 
     Attributes:
         n_patches: The number of patches made from out image.
-        proj: Convolutional layer to split image into patches and generate their embedding.
+        proj: Convolutional layer to split image into patches and generate their embedding.  # noqa: E501
 
     """
 
@@ -54,14 +54,14 @@ class Attention(nn.Module):
     Parameters:
         dim: The input and output dimension of per token features.
         n_heads: Number of attention heads.
-        qkv_bias: If True then we include bias to the query, key and value projections.
+        qkv_bias: If True then we include bias to the query, key and value projections.  # noqa: E501
         attn_p: Dropout probability applied to the query, key and value tensors.
         proj_p: Dropout probability applied to the output tensor.
 
     Attributes:
         scale: Normalizing constant for the dot product.
         qkv: Linear projection for the query, key and value.
-        proj: Linear mapping that takes in the concatenated output of all attention heads and maps it into a new space.
+        proj: Linear mapping that takes in the concatenated output of all attention heads and maps it into a new space.  # noqa: E501
         attn_drop, proj_drop: Dropout layers
     """
 
@@ -70,7 +70,7 @@ class Attention(nn.Module):
         self.n_heads = n_heads
         self.dim = dim
         self.head_dim = dim // n_heads
-        self.scale = self.head_dim ** -0.5
+        self.scale = self.head_dim**-0.5
 
         self.qkv = nn.Linear(dim, dim * 3, bias=qkv_bias)
         self.attn_drop = nn.Dropout(attn_p)
@@ -179,8 +179,8 @@ class Block(nn.Module):
     Parameters:
         dim: Embedding dimension.
         n_heads: Number of attention heads.
-        mlp_ratio: Determines the hidden dimension size of the `MLP` module with respect to `dim`.
-        qkv_bias: If True then we include bias to the query, key and value projections.
+        mlp_ratio: Determines the hidden dimension size of the `MLP` module with respect to `dim`.  # noqa: E501
+        qkv_bias: If True then we include bias to the query, key and value projections.  # noqa: E501
         p, attn_p: Dropout probability.
 
     Attributes:
@@ -230,13 +230,13 @@ class VisionTransformer(nn.Module):
         depth: Number of blocks.
         n_heads: Number of attention heads.
         mlp_ratio: Determines the dimension of the MLP module.
-        qkv_bias: If True then we include a bias to the query, key and value projections.
+        qkv_bias: If True then we include a bias to the query, key and value projections.  # noqa: E501
         p, attn_p: Dropout probability.
 
     Attributes:
         patch_embed: Instance of `PatchEmbed` layer.
-        cls_token: Learnable parameter that will represent the first token in te sequence. It has `embed_dim` elements.
-        pos_emb: Positional embedding of the cls token + all the patches. It has `(n_patches + 1) * embed_dim` elements.
+        cls_token: Learnable parameter that will represent the first token in te sequence. It has `embed_dim` elements.  # noqa: E501
+        pos_emb: Positional embedding of the cls token + all the patches. It has `(n_patches + 1) * embed_dim` elements.  # noqa: E501
         pos_drop: Dropout layer.
         blocks: List of `Block` modules.
         norm: Layer normalization.
@@ -288,10 +288,10 @@ class VisionTransformer(nn.Module):
     def forward(self, x):
         """
         Parameters:
-            x: Input tensor of shape `(n_samples, in_channels, img_size, img_size)`
+            x: Input tensor of shape `(n_samples, in_channels, img_size, img_size)`  # noqa: E501
 
         Returns:
-            logits: torch.Tensor - Logits over all the classes - `(n_samples, n_classes)`
+            logits: torch.Tensor - Logits over all the classes - `(n_samples, n_classes)`  # noqa: E501
         """
 
         n_samples = x.shape[0]

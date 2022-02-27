@@ -18,7 +18,7 @@ def create_animation(
     """
 
     Args:
-        paths: List of arrays representing the paths (history of x,y coordinates) the optimizer went through
+        paths: List of arrays representing the paths (history of x,y coordinates) the optimizer went through  # noqa: E501
         colors: List of strings representing colours for each path.
         names: List of string representing names for each path.
         figsize: Size of the figure.

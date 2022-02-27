@@ -8,16 +8,16 @@ from livelossplot import PlotLosses
 from torch import Tensor
 from torch.utils.data import DataLoader
 
-from models.generative_adversarial_networks.wasserstein_gan.data.dataset import (
+from models.generative_adversarial_networks.wasserstein_gan.data.dataset import (  # noqa: E501
     get_loaders,
 )
-from models.generative_adversarial_networks.wasserstein_gan.model.discriminator import (
+from models.generative_adversarial_networks.wasserstein_gan.model.discriminator import (  # noqa: E501
     Discriminator,
 )
-from models.generative_adversarial_networks.wasserstein_gan.model.generator import (
+from models.generative_adversarial_networks.wasserstein_gan.model.generator import (  # noqa: E501
     Generator,
 )
-from models.generative_adversarial_networks.wasserstein_gan.model.initializer import (
+from models.generative_adversarial_networks.wasserstein_gan.model.initializer import (  # noqa: E501
     initialize_weights,
 )
 from utilities.utils import EasyDict
@@ -94,7 +94,6 @@ def train(
 
 
 @click.command()
-
 # Training config
 @click.option(
     "--num_epochs", help="The number of epochs to train model", default=5
@@ -104,7 +103,6 @@ def train(
     help="The device which to train the model, either on cpu or cuda",
     default="cuda",
 )
-
 # Dataset and Transform config
 @click.option(
     "--channels_img",
@@ -116,7 +114,6 @@ def train(
     help="The size to transform each image in the dataset",
     default=64,
 )
-
 # Generator config
 @click.option("--glr", help="Learning Rate of the Generator", default=5e-5)
 @click.option("--g_batch_size", help="Batch size of Generator", default=64)
@@ -128,7 +125,6 @@ def train(
     help="The Generator's number of initial features to transpose to",
     default=64,
 )
-
 # Discriminator config
 @click.option("--dlr", help="Learning Rate of the Discriminator", default=5e-5)
 @click.option("--d_batch_size", help="Batch size of Discriminator", default=64)

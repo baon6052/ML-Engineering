@@ -32,8 +32,12 @@ isort:
 black:
 	docker-compose run dev python -m black -l 80 .
 
+.PHONY: flake8
+flake8:
+	docker-compose run dev python -m flake8 --max-line-length 80 --exclude=venv .
+
 .PHONY: lint
-lint: isort black
+lint: isort black flake8
 
 .PHONY: help
 help:

@@ -10,11 +10,11 @@ class CharacterDataset(Dataset):
     Parameters:
         text: Input test that will be used to create the entire database.
         window_size: Number of characters to use as input features.
-        vocab_size: Number of characters in the vocabulary. The last character is always reserved for a special "-" out-of-vocabulary character.
+        vocab_size: Number of characters in the vocabulary. The last character is always reserved for a special "-" out-of-vocabulary character.  # noqa: E501
 
     Attributes:
-        ch2ix: Mapping from the character to the position of that character in the vocabulary. Note that all characters that are not in the vocabulary will get mapped into the index `vocab_size - 1`.
-        ix2ch: Mapping from the character position in the vocabulary to the actual character.
+        ch2ix: Mapping from the character to the position of that character in the vocabulary. Note that all characters that are not in the vocabulary will get mapped into the index `vocab_size - 1`.  # noqa: E501
+        ix2ch: Mapping from the character position in the vocabulary to the actual character.  # noqa: E501
         vocabulary: List of all characters. `len(vocabulary) == vocab_size`
     """
 
@@ -41,7 +41,10 @@ class CharacterDataset(Dataset):
 
     def __getitem__(self, ix: int):
         X = torch.LongTensor(
-            [self.ch2ix[c] for c in self.text[ix : ix + self.window_size]]
+            [
+                self.ch2ix[c]
+                for c in self.text[ix : ix + self.window_size]  # noqa: E203
+            ]
         )
         y = self.ch2ix[self.text[ix + self.window_size]]
 
